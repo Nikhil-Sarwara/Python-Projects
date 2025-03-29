@@ -2,6 +2,7 @@
 import signal
 import colored
 import random
+import time
 
 # Function to detect Ctrl + C from the user to quit the game nicely.
 def exit_gracefully(signum, frame):
@@ -36,12 +37,14 @@ def start_game():
     print(f"{colored.fg('green')}Enter 'r' for rock, 'p' for paper, 's' for scissor.{colored.attr('reset')}")
     
     while True:
-        computer_choice = random.choice(['r', 'p', 's'])
+        computer_choice = computer_think()
         player_choice = player_input()
         
         if player_choice not in ['r', 'p', 's']:       
             print(f"{colored.fg('red')}Invalid choice. Please enter 'r', 'p', or 's'.{colored.attr('reset')}")
             continue
+        
+        choice_display(player_choice, computer_choice)
         
         if player_choice == computer_choice:
             print(f"{colored.fg('yellow')}It's a tie!{colored.attr('reset')}")
@@ -54,6 +57,95 @@ def start_game():
         
         if play_again != 'yes':
             break 
+        
+# Function to return possible ascii arts left side computer in red color and green color on right which is player choice
+def choice_display(player_choice, computer_choice):
+    player_art = ""
+    computer_art = ""
+    
+    if player_choice == 'r':
+        player_art = f"""
+{colored.fg('green')}
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+You chose rock.{colored.attr('reset')}
+"""
+    elif player_choice == 'p':
+        player_art = f"""
+{colored.fg('green')}
+     _______
+---'    ____)____
+           ______)
+          _______)
+         _______)
+---.__________)
+You chose paper.{colored.attr('reset')}
+"""
+    else:
+        player_art = f"""
+{colored.fg('green')}
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+You chose scissor.{colored.attr('reset')}
+"""
+        
+    if computer_choice == 'r':
+        computer_art = f"""
+{colored.fg('red')}
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+I chose rock.{colored.attr('reset')}
+"""
+    elif computer_choice == 'p':
+        computer_art = f"""
+{colored.fg('red')}
+     _______
+---'    ____)____
+           ______)
+          _______)
+         _______)
+---.__________)
+I chose paper.{colored.attr('reset')}
+"""
+    else:
+        computer_art = f"""
+{colored.fg('red')}
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+I chose scissor.{colored.attr('reset')}
+"""
+        
+    print(computer_art)
+    print(player_art)
+
+# Computer think function
+def computer_think():
+    
+    # Display the thinking process
+    print(f"\n{colored.fg('green')}I'm thinking...", end="", flush=True)
+    for char in "...":
+        print(char, end="", flush=True)
+        time.sleep(0.5)
+    print(f"{colored.attr('reset')}\n")
+    
+    # Return a random choice
+    return random.choice(['r', 'p', 's'])
     
 # Main Functiton
 def main():
