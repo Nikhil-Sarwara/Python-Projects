@@ -50,7 +50,7 @@ def play_game():
     for question in questions:
         print(question["question"])
         user_answer = input("Your answer: ")
-        if user_answer.lower() == question["answer"].lower():
+        if user_answer.casefold().strip() == question["answer"].casefold():
             print("Correct!")
             score += 1
         else:
