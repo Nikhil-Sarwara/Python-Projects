@@ -8,14 +8,36 @@ def exit_gracefully(signum, frame):
     print("\nGoodbye!")
     exit(0)
     
+# Player choice function
+def player_input():
+    """
+    Asks the user for their choice of rock, paper, or scissor.
+    
+    Returns:
+        str: The user's choice, either 'r', 'p', or 's'.
+    """
+    value = input("Enter your choice: ")
+    
+    # Dictionary of the possible values
+    possible_values = {'r': ['rock', 'r', 'ro', 'roc', 'rocky'], 
+                       'p': ['paper', 'p', 'pa', 'pap', 'pape', 'paperino'],
+                       's': ['scissor', 's', 'sc', 'sci', 'scis', 'sciss', 'scissi', 'scissio']}
+    
+    value = value.strip().lower()
+    if value in possible_values or any(value in s for s in possible_values.values()):
+        return list(possible_values.keys())[list(possible_values.values()).index(next(s for s in possible_values.values() if value in s))]
+    else:
+        print(f"{colored.fg('red')}Invalid choice. Please enter 'r', 'p', or 's'.{colored.attr('reset')}")
+        return player_input()
+    
 # Start game function
 def start_game():
     print(f"\n{colored.fg('green')}Rock, Paper, Scissor!{colored.attr('reset')}")
     print(f"{colored.fg('green')}Enter 'r' for rock, 'p' for paper, 's' for scissor.{colored.attr('reset')}")
     
     while True:
-        player_choice = input("Enter your choice: ").lower()
         computer_choice = random.choice(['r', 'p', 's'])
+        player_choice = player_input()
         
         if player_choice not in ['r', 'p', 's']:       
             print(f"{colored.fg('red')}Invalid choice. Please enter 'r', 'p', or 's'.{colored.attr('reset')}")
