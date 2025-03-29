@@ -1,5 +1,7 @@
 import colored
 import signal
+import random
+import time
 
 # Function to take user details
 def user_details():
@@ -15,7 +17,12 @@ def display_user_details(name, age):
     
 # Function to start the game
 def start_game():
-    number = int(input("Enter a number between 1 and 100: "))
+    number = random.randint(1, 100)
+    print(f"{colored.fg('green')}I'm thinking of a number between 1 and 100...", end="", flush=True)
+    for char in "...":
+        print(char, end="", flush=True)
+        time.sleep(0.5)
+    print(f"{colored.attr('reset')}\n")
     attempts = 0
     
     while True:
